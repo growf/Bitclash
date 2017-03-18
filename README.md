@@ -11,7 +11,3 @@ The challenger and the current defender take turns to fight each other until one
 Critical hits, if enabled, boost a single hit's damage by a multiplier. Critical hit chance is *per match-up*; the challenger and defender will throw at most one critical hit in each fight.
 
 If the challenger defeats the current defender then they become the new defender and (optionally) get a boost to their hit points. The defender can also heal themselves by cheering but their health cannot exceed their maximum hit points.
-
-## Using *Bitclash*
-
-*Bitclash* is currently registered as an application with Twitch available at http://growf.org/Bitclash
