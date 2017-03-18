@@ -1,0 +1,43 @@
+@import url('shared.css');
+
+body > div {
+	min-width: 22em;
+}
+
+ul {
+	font-size: 80%;
+	list-style-type: none;
+	margin: 0.5em;
+	padding: 0;
+}
+
+ul > li {
+	padding: 1em 0;
+	border-bottom: 1px solid #f0f0f0;
+	white-space: nowrap;
+}
+
+ul > li:first-of-type {
+	padding-top: 0;
+}
+
+ul > li:last-of-type {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+ul > li > p {
+	min-width: 20em;
+	margin: 1em 0 0 1em;
+	white-space: initial;
+	font-size: 80%;
+	text-align: justify;
+}
+
+button {
+	border: 1px solid #b0b0b0;
+	background-color: #d0d0d0;
+	font-family: 'VT323', sans-serif;
+	font-size: 100%;
+	padding: 1px 1em;
+}

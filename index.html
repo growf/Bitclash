@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bitclash</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+	</head>
+	<body>
+		<div>
+			Bitclash
+			<ul>
+				<li>
+					<p>
+						<em>Bitclash</em> is a web-based animated widget that turns bits
+						into hit points and lets your Twitch viewers battle for dominance!
+					</p>
+				</li>
+				<li>
+					Combat
+					<p>
+						Challengers get as many hit points as the number of bits in their cheer
+						and face off against the current defender (initially the channel owner)
+						and the defender's remaining hit points.
+					</p>
+					<p>
+						The challenger and the current defender take turns to fight each other
+						until one of them is defeated. The number of hits and damage dealt are
+						scaled according to the size of the challenger's cheer. The damage dealt
+						is random but, without (optional) critical hits, should sum to around
+						105% of the challenger's cheer on average.
+					</p>
+					<p>
+						Critical hits, if enabled, boost a single hit's damage by a multiplier.
+						Critical hit chance is <em>per match-up</em>; the challenger and defender
+						will throw at most one critical hit in each fight.
+					</p>
+					<p>
+						If the challenger defeats the current defender then they become the
+						new defender and (optionally) get a boost to their hit points. The
+						defender can also heal themselves by cheering but their health cannot
+						exceed their maximum hit points.
+					</p>
+				</li>
+				<li>
+					Using <em>Bitclash</em>
+					<p>
+						<em>Bitclash</em> is intended for use as a webpage/URL source in your
+						broadcast software. It can also be captured from a web browser although
+						typically that won't support a transparent background and you may need
+						to use chroma keying to achieve transparency.
+					</p>
+					<p>
+						To authorize <em>Bitclash</em> for your channel click the <em>Configure
+						Bitclash</em> button below. In standard usage <em>Bitclash</em> requires
+						permission to view your user details. A test mode that listens for whispers
+						instead of cheers can be enabled; this will require an additional permission
+						to be able to access your Twitch chat which can be revoked once testing is
+						complete. Once authorized a URL will be generated for <em>Bitclash</em>
+						containing your authorization token and selected configuration.
+					</p>
+					<p>
+						<em>Bitclash</em> should work with any browser or embedded browser with
+						support for JavaScript and cookies. The current state of combat and any
+						queued cheers are saved to a persistent browser cookie and will be restored
+						if the widget is closed and re-opened. The current defender can be reset to
+						a specific user and/or number of hit points as a one-time update via the
+						settings page; this will also clear the current challenger and any fight
+						that is in progress but will not remove any queued cheers. If your
+						webpage/URL source supports interaction with the widget or you are using
+						<em>Bitclash</em> in a browser players' avatars can be swapped for a
+						default image by clicking on the avatar.
+					</p>
+					<p>
+						No information is stored on <em>Bitclash</em>'s server. The combat details,
+						queued cheers, and settings are all stored on your machine. <em>Bitclash</em>
+						is only able to queue viewer's cheers whilst the <em>Bitclash</em> window
+						is open as a source or in a browser. <em>Bitclash</em> is provided for
+						entertainment purposes; no liability can be accepted for any defects, outages,
+						or loss of game data.
+					</p>
+					<p>
+						<button onclick="window.location.href='settings.html'">Configure <em>Bitclash</em></button>
+					</p>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

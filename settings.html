@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bitclash Settings</title>
+		<link rel="stylesheet" type="text/css" href="css/settings.css">
+	</head>
+	<body>
+		<div>
+			Bitclash Settings
+			<ul id="settings">
+				<li>
+					Application
+					<ul>
+						<li>
+							<label for="url">URL</label>
+							<div id="url"></div>
+						</li>
+						<li>
+							<label for="testMode">Test Mode</label>
+							<select id="testMode">
+								<option value="disabled">Disabled</option>
+								<option value="enabled">Enabled</option>
+							</select>
+						</li>
+						<li class="testModeEnabled">
+							<label for="testModeInfo"></label>
+							<div id="testModeInfo">
+								<p>
+									Test Mode doesn't respond to cheers and instead listens for
+									whispers to you containing <kbd>clash</kbd> followed by a
+									number (<em>eg.</em> <kbd>clash100</kbd>).
+								</p>
+								<p>
+									This requires authorization for an additional permission
+									(<em>"Log into chat and send messages"</em>) that won't be
+									needed during normal operation.
+								</p>
+								<p>
+									To remove this permission once you've finished testing:
+									disable Test Mode, apply the new settings, and re-authorize
+									<em>Bitclash</em>.
+								</p>
+							</div>
+						</li>
+						<li class="unauthorized">
+							<label for="authorize"></label>
+							<button id="authorize">Authorize <em>Bitclash</em></button>
+						</li>
+						<li class="authorized">
+							<label for="reauthorize"></label>
+							<button id="reauthorize">Re-authorize <em>Bitclash</em></button>
+						</li>
+						<li>
+							<label for="resetDefender">Reset Defender</label>
+							<ol id="resetDefender">
+								<li>
+									<label for="resetDefenderName">User</label>
+									<input id="resetDefenderName">
+								</li>
+								<li>
+									<label for="resetDefenderHP">HP</label>
+									<input id="resetDefenderHP"> HP
+								</li>
+								<li>
+									<label for="resetDefenderMaxHP">Max HP</label>
+									<input id="resetDefenderMaxHP"> HP
+								</li>
+							</ol>
+						</li>
+						<li class="resetEnabled">
+							<label for="resetInfo"></label>
+							<div id="resetInfo">
+								<p>
+									This will reset the defender and clear the current
+									challenger and any fight that is in progress; queued
+									cheers will not be affected.
+								</p>
+							</div>
+						</li>
+					</ul>
+				</li>
+				<li>
+					Display
+					<ul>
+						<li>
+							<label for="view">View</label>
+							<select id="view">
+								<option value="normal">Normal</option>
+								<option value="compact">Compact</option>
+								<option value="tiny">Tiny</option>
+							</select>
+						</li>
+						<li>
+							<label for="sampleView"></label>
+							<div id="sampleView">
+								<img class="normal" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMUAAAAsCAYAAADVc3y6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAABCNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjE5NzwvZXhpZjpQaXhlbFhEaW1lbnNpb24+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+NDQ8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZGM6c3ViamVjdD4KICAgICAgICAgICAgPHJkZjpCYWcvPgogICAgICAgICA8L2RjOnN1YmplY3Q+CiAgICAgICAgIDx4bXA6TW9kaWZ5RGF0ZT4yMDE3OjAzOjA0IDE4OjAzOjE4PC94bXA6TW9kaWZ5RGF0ZT4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5QaXhlbG1hdG9yIDMuNjwveG1wOkNyZWF0b3JUb29sPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KyYAxhgAAAaRJREFUeAHt3NGuAUEURFFu/P8vk/tAJmgm4qRP6eVpMsPp6l22COFwcEMAAQQQQOAVgePm4nlz3PHwmrV7zo7sqjJdO9k7v3t3D/vpHHibbXu8twz3+z6BT3r45DHfT/584i3b3/PrziKwLgFSrNu9nQ8IkGIAxul1CZBi3e7tfECAFAMwTq9LgBTrdm/nAwKkGIBxel0Cp9Ct3z5TDs0vdmMCiVI8fOvYmK9ogQS8fQosTeRaAqSo5Wt6IAFSBJYmci0BUtTyNT2QACkCSxO5lgApavmaHkiAFIGliVxLgBS1fE0PJECKwNJEriVAilq+pgcSIEVgaSLXEiBFLV/TAwmQIrA0kWsJkKKWr+mBBEgRWJrItQRIUcvX9EACpAgsTeRaAqSo5Wt6IAFSBJYmci2BxN9o7yXizw32kqq/X9Tv6n9Ziv+qo8qof25OWSHuxcnbpynPE4t2JkCKzu3INoUAKaZgt2hnAqTo3I5sUwiQYgp2i3YmQIrO7cg2hQAppmC3aGcC999TxH2m/Abur+3nzXYjLuskoiYhEUAAAQTGBC5Wpw9Pp1dPmwAAAABJRU5ErkJggg==">
+								<img class="compact" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAA+CAYAAAA/K6W8AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAABCJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk5PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj42MjwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgICAgIDxkYzpzdWJqZWN0PgogICAgICAgICAgICA8cmRmOkJhZy8+CiAgICAgICAgIDwvZGM6c3ViamVjdD4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTc6MDM6MDQgMTg6MDM6NDM8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpeGVsbWF0b3IgMy42PC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgoBvPvFAAABh0lEQVR4Ae2Z2wrCMBAFq/j/v+y1WwQXydOegY4vkVg4x5mkGLttvjAELnuTe6hR5YfimbEJGYlMJv291RXd7mTllAESrgxlgAiAqrgzlAEiAKrizlAGiACoijtDGSACoCruDGWACICquDOUASIAquLOAMm4Abr4XOMj4UKQ8apy9id+7wXpbQpwa6gKyigSgFEZAAlVQRlFAjAqAyChKiijSABGZQAkVAVlFAnASDn0eQp/LgaCjLOfvo89+S3D1XlgybxxVf5yTy1KXfy62BIy3pn+mmpspKaUkSLf5CqjgZKaUkaKfJOrjAZKakoZKfJNrjIaKKkpZaTIN7nKaKCkppSRIt/kKqOBkppSRop8k6uMBkpqShkp8k2uMhooqal60pf4Dz/1nf/lRh/wlIxXwWiRf4SGPosvSG9TQ6ZXYpSxQmnoGmUMgV6JUcYKpaFrlDEEeiVGGSuUhq5RxhDolRhlrFAauub70Bc/9Ax9Z2xMyTj76RshqGQgyoBKeJcAyYhUeQBdlg6BM4sliAAAAABJRU5ErkJggg==">
+								<img class="tiny" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAAgCAYAAAAG98ZXAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAABCJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk5PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj4zMjwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgICAgIDxkYzpzdWJqZWN0PgogICAgICAgICAgICA8cmRmOkJhZy8+CiAgICAgICAgIDwvZGM6c3ViamVjdD4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTc6MDM6MDQgMTg6MDM6ODI8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpeGVsbWF0b3IgMy42PC94bXA6Q3JlYXRvclRvb2w+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgoSGnkcAAAAvUlEQVRoBe2ZSQrAMAzEmtL/f7lrJvQHFli9uDeLkR0I2TY/TAJjkpxFROlf1J7ZtkJGRU9m+pNqR9M1g1MGSLgylAFKAITiZigDlAAIxc1QBigBEIqboQxQAiAUN0MZoARAKG6GMkAJgFDcDJCMA8Diu8YnYRBkPCjdX/zegfSYAhwNQVBGkgBUZQAkBEEZSQJQlQGQEARlJAlAVQZAQhCUkSQAlXLp8xZ+DwNBRvfb99rJvwync8XiT/sELt0uB0H7vXhAAAAAAElFTkSuQmCC">
+							</div>
+						</li>
+						<li>
+							<label for="bgcolor">Background</label>
+							<ol id="bgcolor">
+								<li>
+									<label for="bgcolorR">Red</label>
+									<input type="range" id="bgcolorR" min="0" max="255">
+								</li>
+								<li>
+									<label for="bgcolorG">Green</label>
+									<input type="range" id="bgcolorG" min="0" max="255">
+								</li>
+								<li>
+									<label for="bgcolorB">Blue</label>
+									<input type="range" id="bgcolorB" min="0" max="255">
+								</li>
+								<li>
+									<label for="bgcolorA">Alpha</label>
+									<input type="range" id="bgcolorA" min="0" max="255">
+								</li>
+							</ol>
+						</li>
+						<li>
+							<label for="fgcolor">Text</label>
+							<ol id="fgcolor">
+								<li>
+									<label for="fgcolorR">Red</label>
+									<input type="range" id="fgcolorR" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgcolorG">Green</label>
+									<input type="range" id="fgcolorG" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgcolorB">Blue</label>
+									<input type="range" id="fgcolorB" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgcolorA">Alpha</label>
+									<input type="range" id="fgcolorA" min="0" max="255">
+								</li>
+							</ol>
+						</li>
+						<li>
+							<label for="fgshadow">Text Shadow</label>
+							<ol id="fgshadow">
+								<li>
+									<label for="fgshadowR">Red</label>
+									<input type="range" id="fgshadowR" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgshadowG">Green</label>
+									<input type="range" id="fgshadowG" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgshadowB">Blue</label>
+									<input type="range" id="fgshadowB" min="0" max="255">
+								</li>
+								<li>
+									<label for="fgshadowA">Alpha</label>
+									<input type="range" id="fgshadowA" min="0" max="255">
+								</li>
+							</ol>
+						</li>
+						<li>
+							<label for="sample"></label>
+							<div id="sample">
+								<div id="sampleText">Bitclash</div>
+							</div>
+						</li>
+						<li>
+							<label for="defaultImage">Default Avatar</label>
+							<ol id="defaultImage">
+								<li>
+									<label for="defaultImageURL">URL</label>
+									<input id="defaultImageURL">
+								</li>
+							</ol>
+						</li>
+						<li class="defaultImageSelected">
+							<label for="sampleImage"></label>
+							<div id="sampleImage"></div>
+						</li>
+					</ul>
+				</li>
+				<li>
+					Sound
+					<ul>
+						<li>
+							<label for="volume">Volume</label>
+							<input type="range" id="volume" min="0" max="100">
+						</li>
+					</ul>
+				</li>
+				<li>
+					Combat
+					<ul>
+						<li>
+							<label for="criticalHit">Critical Hit</label>
+							<ol id="criticalHit">
+								<li>
+									<label for="criticalMin">Min</label>
+									<input id="criticalMin"> x Damage
+								</li>
+								<li>
+									<label for="criticalMax">Max</label>
+									<input id="criticalMax"> x Damage
+								</li>
+								<li>
+									<label for="criticalChance">Chance</label>
+									<input id="criticalChance"> %
+								</li>
+							</ol>
+						</li>
+						<li>
+							<label for="victoryBoost">Victory Boost</label>
+							<ol id="victoryBoost">
+								<li>
+									<label for="victoryMultiplier">New HP</label>
+									<input id="victoryMultiplier"> x Remaining HP
+								</li>
+								<li>
+									<label for="victoryMin">Min</label>
+									<input id="victoryMin"> HP
+								</li>
+								<li>
+									<label for="victoryMax">Max</label>
+									<input id="victoryMax"> HP
+								</li>
+							</ol>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<ul>
+						<li>
+							<label for="applySettings"></label>
+							<button id="applySettings">Apply</button> <button id="cancelSettings">Cancel</button>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js/shared.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
+	</body>
+</html>

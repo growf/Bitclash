@@ -1,0 +1,173 @@
+@import url('shared.css');
+@import url('https://fonts.googleapis.com/css?family=VT323&subset=latin-ext');
+
+body > div {
+	min-width: 22em;
+}
+
+ul {
+	font-size: 80%;
+	list-style-type: none;
+	margin: 0 0.5em;
+	padding: 0;
+}
+
+ul > li {
+	padding: 0.5em 0;
+	white-space: nowrap;
+}
+
+ul > li > label {
+	display: inline-block;
+	vertical-align: top;
+	width: 10em;
+}
+
+ul > li > div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+ul#settings {
+	margin: 0.5em;
+}
+
+ul#settings > li:first-of-type {
+	padding-top: 0;
+}
+
+ul#settings > li {
+	border-bottom: 1px solid #f0f0f0;
+}
+
+ul#settings > li:last-of-type {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+ol {
+	display: inline-block;
+	vertical-align: top;
+	font-size: 90%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+ol > li {
+	padding: 0.1em 0;
+	white-space: nowrap;
+}
+
+ol > li > label {
+	display: inline-block;
+	vertical-align: top;
+	width: 4em;
+}
+
+ol > li > div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+input {
+	border: 1px solid #b0b0b0;
+	background-color: #ffffff;
+	font-family: sans-serif;
+	font-size: 100%;
+}
+
+input[type=range] {
+	border: none;
+	background: transparent;
+}
+
+button {
+	border: 1px solid #b0b0b0;
+	background-color: #d0d0d0;
+	font-family: sans-serif;
+	font-size: 100%;
+	padding: 1px 1em;
+}
+
+select {
+	border: 1px solid #b0b0b0;
+	background-color: #ffffff;
+	font-family: sans-serif;
+	font-size: 100%;
+	padding: 1px 1em;
+}
+
+div#url {
+	width: calc(100% - 10em);
+	min-width: 22em;
+	white-space: initial;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+div#testModeInfo,
+div#resetInfo {
+	width: calc(100% - 10em);
+	min-width: 22em;
+	border: 1px solid #f0f0f0;
+	border-radius: 0.5em;
+	background: #f0f0f0;
+	white-space: initial;
+}
+
+div#testModeInfo > p,
+div#resetInfo > p {
+	margin: 1em;
+	text-align: justify;
+}
+
+div#sampleView {
+	border: 1px solid #f0f0f0;
+	border-radius: 0.5em;
+	padding: 0.25em;
+}
+
+div#sampleView img {
+	display: none;
+	vertical-align: top;
+}
+
+div#sample {
+	overflow: hidden;
+	border: 1px solid #f0f0f0;
+	border-radius: 0.5em;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAA6ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxNy0wMy0wNFQxODowMzo2NzwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+UGl4ZWxtYXRvciAzLjY8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6Q29tcHJlc3Npb24+NTwvdGlmZjpDb21wcmVzc2lvbj4KICAgICAgICAgPHRpZmY6UmVzb2x1dGlvblVuaXQ+MjwvdGlmZjpSZXNvbHV0aW9uVW5pdD4KICAgICAgICAgPHRpZmY6WVJlc29sdXRpb24+NzI8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjcyPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MTY8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpDb2xvclNwYWNlPjE8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjE2PC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CuZ2WZMAAAA1SURBVCgVY/z//z8DNvDx40dswgxMWEXxCI5qwBM4cCkWXOHNz88PV4TMGA1W5NDAxSY5lABDygjy034J6wAAAABJRU5ErkJggg==');
+	padding: 0;
+}
+
+div#sampleText {
+	font-family: 'VT323', sans-serif;
+	font-size: 250%;
+	padding: 0.25em 1em;
+}
+
+input#defaultImageURL {
+	width: 20em;
+}
+
+div#sampleImage {
+	overflow: hidden;
+	border: 1px solid #f0f0f0;
+	border-radius: 0.5em;
+	min-width: 15em;
+	max-width: 15em;
+	min-height: 15em;
+	max-height: 15em;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.testModeEnabled,
+.resetEnabled,
+.authorized,
+.unauthorized,
+.defaultImageSelected {
+	display: none;
+}

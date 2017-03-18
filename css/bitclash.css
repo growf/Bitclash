@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&subset=latin-ext');
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'VT323', sans-serif;
+	overflow: hidden;
+}
+
+body > div {
+	display: flex;
+	flex-direction: row;
+	margin: 1vw;
+}
+
+div.imageArea {
+	position: relative;
+	box-shadow: 0 0 0 1px black;
+}
+
+div.normalView div.imageArea {
+	min-width: 20vw;
+	max-width: 20vw;
+	min-height: 20vw;
+	max-height: 20vw;
+}
+
+div.compactView div.imageArea {
+	min-width: 30vw;
+	max-width: 30vw;
+	min-height: 30vw;
+	max-height: 30vw;
+}
+
+div.statusArea {
+	flex-basis: 100%;
+}
+
+div.statusArea.playerLeft {
+	margin-left: 1vw;
+}
+
+div.statusArea.playerRight {
+	margin-right: 1vw;
+}
+
+div.normalView div.statusArea {
+	min-height: 20vw;
+	max-height: 20vw;
+}
+
+div.compactView div.statusArea {
+	min-height: 30vw;
+	max-height: 30vw;
+}
+
+div.playerImage {
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+div.playerName {
+	position: relative;
+}
+
+div.playerName div.scaledText {
+	bottom: 0;
+}
+
+div.normalView div.playerName {
+	min-height: 8vw;
+	max-height: 8vw;
+	margin: 1vw 0;
+}
+
+div.normalView div.playerName div.scaledText.playerLeft {
+	top: 0;
+	bottom: initial;
+}
+
+div.compactView div.playerName {
+	min-height: 15vw;
+	max-height: 15vw;
+}
+
+div.playerHP {
+	position: relative;
+}
+
+div.playerHP > svg {
+	position: absolute;
+	width: 100%;
+	box-shadow: 0 0 0 1px black;
+}
+
+div.playerHP > div.scaledText {
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+div.normalView div.playerHP {
+	min-height: 5vw;
+	max-height: 5vw;
+}
+
+div.normalView div.playerHP.playerLeft {
+	margin-right: 5vw;
+}
+
+div.normalView div.playerHP.playerRight {
+	margin-left: 5vw;
+}
+
+div.normalView div.playerHP > svg {
+	min-height: 5vw;
+	max-height: 5vw;
+}
+
+div.compactView div.playerHP {
+	min-height: 11vw;
+	max-height: 11vw;
+	padding: 2vw 0;
+}
+
+div.compactView div.playerHP > svg {
+	min-height: 11vw;
+	max-height: 11vw;
+}
+
+div.scaledText {
+	position: absolute;
+	overflow: hidden;
+	white-space: nowrap;
+	padding: 1px;
+}
+
+div.scaledText.playerLeft {
+	left: 0;
+}
+
+div.scaledText.playerRight {
+	right: 0;
+}
+
+div.scaledText.damageText,
+div.scaledText.healthText {
+	left: 50%;
+	transform: translate(-50%, 0);
+}
+
+div.scaledText.damageText:before {
+	content: '-';
+}
+
+div.scaledText.healthText:before {
+	content: '+';
+}
+
+.normalView,
+.compactView {
+	display: none;
+}
+
+div#errorMessage {
+	display: none;
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	padding: 0 1.5vw 0.5vw;
+	background-color: red;
+	box-shadow: 0 2px 8px maroon;
+	color: white;
+	text-shadow: 0 1px 4px black;
+	font-size: 3vw;
+	white-space: nowrap;
+}
