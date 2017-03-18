@@ -111,8 +111,9 @@ var readConfiguration = function () {
 }
 
 var vw = function (units) {
-	// get pixel width equivalent to 1vw
-	return Math.round((units || 0) * $(window).innerWidth() / 100);
+	// get view-width equivalent in pixels
+	units = (isFinite(parseInt(units)) ? parseInt(units) : 1);
+	return Math.round(units * $(window).innerWidth() / 100);
 };
 
 var scaleText = function (strings, maxWidth, maxHeight, color, shadowColor, shadowStyle) {

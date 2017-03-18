@@ -7,7 +7,7 @@ var getState = function () {
 	var state;
 	try {state = JSON.parse(getCookie(stateCookieName))} catch (e) {state = {}}
 
-	//! migrate state from before last reset timestamp existed
+	//! migrate states created before last reset timestamp existed
 	if (state.hasOwnProperty("updated") && !state.hasOwnProperty("reset")) {state.reset = state.updated}
 
 	if (!state.updated) {state.updated = $.now()}

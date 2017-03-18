@@ -192,7 +192,7 @@ var getUser = function (id, callback) {
 	});
 }
 
-// retrieve user object for user with given ID
+// retrieve user object for user with given login name
 var getUserByLogin = function (login, callback) {
 	$.ajax({
 		'url'     : apiURL + 'users',
