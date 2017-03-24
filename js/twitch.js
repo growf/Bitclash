@@ -5,7 +5,7 @@ var pubsubPing;
 var pubsubPong;
 
 // send ping to PubSub
-var pingPubSub = function (event) {
+var pingPubSub = function () {
 	// schedule reconnection if PONG is not received within 10 seconds
 	pubsubPong = window.setTimeout(reconnectPubSub, 10000);
 
@@ -99,7 +99,7 @@ var listenPubSub = function (event) {
 };
 
 // disconnect from PubSub
-var disconnectPubSub = function (event) {
+var disconnectPubSub = function () {
 	// clear events
 	if (pubsubPing) {
 		window.clearTimeout(pubsubPing);
@@ -109,6 +109,11 @@ var disconnectPubSub = function (event) {
 		window.clearTimeout(pubsubPong);
 		pubsubPong = undefined;
 	}
+
+	// clear event listeners
+	pubsubSocket.onmessage = undefined;
+	pubsubSocket.onerror = undefined;
+	pubsubSocket.onclose = undefined;
 
 	// close socket
 	try {pubsubSocket.close()} catch (e) {}
