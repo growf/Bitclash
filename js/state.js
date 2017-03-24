@@ -93,7 +93,7 @@ var dequeueHit = function () {
 
 var queueChallenger = function (userID, username, bits) {
 	bits = parseInt(bits);
-	if (isFinite(bits)) {
+	if (isFinite(bits) && bits > 0) {
 		var state = getState();
 		var index = state.queue.length - 1;
 		if (index >= 0 && state.queue[index].id === userID && state.queue[index].bits + bits <= 100000) {
