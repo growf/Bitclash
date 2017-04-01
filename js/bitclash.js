@@ -281,6 +281,26 @@ var focusPlayer = function (index) {
 	}
 };
 
+var refreshPlayerImages = function () {
+	var state = getState();
+
+	if (state.player[0] !== undefined && state.player[0].id !== undefined) {
+		getUser(state.player[0].id, function (success, obj) {
+			if (success) {
+				setPlayerImage(0, ([undefined, null, ''].indexOf(obj.logo) == -1 ? obj.logo : undefined))
+			}
+		});
+	}
+
+	if (state.player[1] !== undefined && state.player[1].id !== undefined) {
+		getUser(state.player[1].id, function (success, obj) {
+			if (success) {
+				setPlayerImage(1, ([undefined, null, ''].indexOf(obj.logo) == -1 ? obj.logo : undefined))
+			}
+		});
+	}
+}
+
 var updateDisplay = function () {
 	var state = getState();
 
@@ -614,33 +634,9 @@ var login = function (success, obj) {
 	connectPubSub();
 };
 
-var start = function () {
-	window.setInterval(update, 1000);
-};
-
-var init = function () {
-	var deferredResize;
-
-	readConfiguration();
-	initDisplay();
-
-	$(window).on('resize', function () {
-		if (deferredResize) {window.clearTimeout(deferredResize)}
-		deferredResize = window.setTimeout(updateDisplay, 100);
-	});
-	$('div.imageArea.playerLeft').on('mousedown', toggleImage.bind(null, 0));
-	$('div.imageArea.playerRight').on('mousedown', toggleImage.bind(null, 1));
-
-	loadSounds();
-	getAuthorizedUser(config.token, login);
-
-	if (!config.forcePlayer || !config.forcePlayer.timestamp) {
-		updateDisplay();
-		start();
-		return;
-	}
-
+var forcePlayer = function (callback) {
 	var state = getState();
+
 	if (config.forcePlayer.name === '') {
 		if (state.player[0].defender || state.player[1].defender) {
 			// update current defender's HP
@@ -653,34 +649,62 @@ var init = function () {
 			resetState(config.forcePlayer.timestamp, d, state.player[d]);
 		}
 
-		updateDisplay();
-		start();
-		return;
-	}
-
-	getUserByLogin(config.forcePlayer.name, function (success, obj) {
-		if (success) {
-			if (obj.users && obj.users.length) {
-				// overwrite current state
-				resetState(config.forcePlayer.timestamp, 0, {
-					'id'            : parseInt(obj.users[0]._id),
-					'name'          : (obj.users[0].display_name !== undefined && obj.users[0].display_name.length ? obj.users[0].display_name : obj.users[0].name),
-					'image'         : ([undefined, null, ''].indexOf(obj.users[0].logo) == -1 ? obj.users[0].logo : undefined),
-					'overrideImage' : false,
-					'defender'      : true,
-					'maxHP'         : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : config.hpMin)),
-					'currentHP'     : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : config.hpMin))
-				});
-
-				updateDisplay();
-				start();
+		callback.call(undefined, true);
+	} else {
+		getUserByLogin(config.forcePlayer.name, function (success, obj) {
+			if (success) {
+				if (obj.users && obj.users.length) {
+					// overwrite current state
+					resetState(config.forcePlayer.timestamp, 0, {
+						'id'            : parseInt(obj.users[0]._id),
+						'name'          : (obj.users[0].display_name !== undefined && obj.users[0].display_name.length ? obj.users[0].display_name : obj.users[0].name),
+						'image'         : ([undefined, null, ''].indexOf(obj.users[0].logo) == -1 ? obj.users[0].logo : undefined),
+						'overrideImage' : false,
+						'defender'      : true,
+						'maxHP'         : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : config.hpMin)),
+						'currentHP'     : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : config.hpMin))
+					});
+				} else {
+					success = false;
+					showError('Couldn\'t reset defender: Unknown user');
+				}
 			} else {
-				showError('Couldn\'t reset defender: Unknown user');
+				showError('Couldn\'t reset defender: ' + obj.error);
 			}
-		} else {
-			showError('Couldn\'t reset defender: ' + obj.error);
-		}
+
+			callback.call(undefined, success);
+		});
+	}
+};
+
+var start = function () {
+	refreshPlayerImages();
+	updateDisplay();
+
+	window.setInterval(update, 1000);
+};
+
+var init = function () {
+	var deferredResize;
+
+	readConfiguration();
+	initDisplay();
+	loadSounds();
+
+	$(window).on('resize', function () {
+		if (deferredResize) {window.clearTimeout(deferredResize)}
+		deferredResize = window.setTimeout(updateDisplay, 100);
 	});
+	$('div.imageArea.playerLeft').on('mousedown', toggleImage.bind(null, 0));
+	$('div.imageArea.playerRight').on('mousedown', toggleImage.bind(null, 1));
+
+	getAuthorizedUser(config.token, login);
+
+	if (config.forcePlayer && config.forcePlayer.timestamp) {
+		forcePlayer(function (success) {if (success) {start()}});
+	} else {
+		start();
+	}
 };
 
 // need to wait until everything is loaded

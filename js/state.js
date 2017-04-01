@@ -65,9 +65,17 @@ var setPlayer = function (index, player) {
 	setCookie(stateCookieName, JSON.stringify(state), true);
 };
 
-var toggleImage = function (index) {
-	if ([0, 1].indexOf(index) == -1) {return}
+var setPlayerImage = function (index, url) {
 	var state = getState();
+	if (state.player[index] === undefined || state.player[index].image === url) {return}
+	state.player[index].image = url;
+	state.updated = $.now();
+	setCookie(stateCookieName, JSON.stringify(state), true);
+};
+
+var toggleImage = function (index) {
+	var state = getState();
+	if (state.player[index] === undefined) {return}
 	state.player[index].overrideImage = !(state.player[index].overrideImage);
 	state.updated = $.now();
 	setCookie(stateCookieName, JSON.stringify(state), true);
