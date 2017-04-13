@@ -693,7 +693,7 @@ var init = function () {
 
 	$(window).on('resize', function () {
 		if (deferredResize) {window.clearTimeout(deferredResize)}
-		deferredResize = window.setTimeout(updateDisplay, 100);
+		deferredResize = window.setTimeout(updateDisplay, 0);
 	});
 	$('div.imageArea.playerLeft').on('mousedown', toggleImage.bind(null, 0));
 	$('div.imageArea.playerRight').on('mousedown', toggleImage.bind(null, 1));
