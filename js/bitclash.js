@@ -194,7 +194,7 @@ var drawHPBar = function (index, scale, maxHP, currentHP, interimHP) {
 				$(this).append(hpBar);
 
 				if (interimHP > 0) {
-					var hpText = scaleText([interimHP.toLocaleString()], $(hpBar).innerWidth() - vw(2), $(hpBar).innerHeight() + vw(1))[0];
+					var hpText = scaleText([interimHP.toLocaleString()], $(hpBar).innerWidth() - vw(2), $(hpBar).innerHeight())[0];
 					$(this).append($(hpText).addClass('playerLeft'));
 				}
 			});
@@ -218,7 +218,7 @@ var drawHPBar = function (index, scale, maxHP, currentHP, interimHP) {
 				$(this).append(hpBar);
 
 				if (interimHP > 0) {
-					var hpText = scaleText([interimHP.toLocaleString()], hpBar.innerWidth() - vw(2), hpBar.innerHeight() + vw(1))[0];
+					var hpText = scaleText([interimHP.toLocaleString()], hpBar.innerWidth() - vw(2), hpBar.innerHeight())[0];
 					$(this).append($(hpText).addClass('playerRight'));
 				}
 			});
