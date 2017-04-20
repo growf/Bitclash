@@ -248,7 +248,12 @@ var drawNames = function (player1, player2) {
 };
 
 var initDisplay = function () {
-	loadWebFont(config.font);
+	WebFont.load({
+		'google' : {
+			'families' : [config.font + ':regular']
+		},
+		'active' : updateDisplay
+	});
 
 	$('body').css({
 		'background-color' : config.bgcolor,
@@ -688,8 +693,6 @@ var forcePlayer = function (callback) {
 
 var start = function () {
 	refreshPlayerImages();
-	update();
-
 	window.setInterval(update, 1000);
 };
 
