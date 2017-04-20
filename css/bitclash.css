@@ -103,6 +103,7 @@ div.playerHP > div.scaledText {
 	margin-right: 1vw;
 	top: 50%;
 	transform: translate(0, -50%);
+	font-variant-numeric: lining-nums;
 }
 
 div.normalView div.playerHP {
