@@ -688,7 +688,7 @@ var forcePlayer = function (callback) {
 
 var start = function () {
 	refreshPlayerImages();
-	updateDisplay();
+	update();
 
 	window.setInterval(update, 1000);
 };

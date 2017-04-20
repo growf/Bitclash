@@ -99,9 +99,10 @@ div.playerHP > svg {
 }
 
 div.playerHP > div.scaledText {
-	margin-top: -0.5vw;
 	margin-left: 1vw;
 	margin-right: 1vw;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 div.normalView div.playerHP {
