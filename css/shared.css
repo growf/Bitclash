@@ -20,3 +20,8 @@ body > div {
 body > div * {
 	line-height: initial;
 }
+
+a {
+	color: black;
+	text-decoration: underline dotted black;
+}

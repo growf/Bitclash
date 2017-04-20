@@ -39,6 +39,9 @@ var readConfiguration = function () {
 					config.bgcolor = 'rgba(' + [v[0], v[1], v[2], v[3] / 255].join(', ') + ')'; 
 				}
 				break;
+			case 'font':
+				if (v.length) {config.font = v}
+				break;
 			case 'fg':
 				v = v.split(',').map(function (x) {return (isFinite(parseFloat(x)) ? Math.min(Math.max(Math.round(x), 0), 255) : 0)});
 				if (v.length == 4) {
@@ -52,7 +55,7 @@ var readConfiguration = function () {
 				}
 				break;
 			case 'img':
-				if (v.length) {config.defaultImage = v};
+				if (v.length) {config.defaultImage = v}
 				break;
 			case 'vol':
 				v = (isFinite(v) ? Math.min(Math.max(v, 0), 100) : 0);
@@ -83,6 +86,7 @@ var readConfiguration = function () {
 	if (config.testMode === undefined) {config.testMode = false}
 	if (config.view === undefined) {config.view = 'normal'}
 	if (config.bgcolor === undefined) {config.bgcolor = 'rgba(255, 255, 255, 0.0)'}
+	if (config.font === undefined) {config.font = 'VT323'}
 	if (config.fgcolor === undefined) {config.fgcolor = 'rgba(255, 255, 255, 1.0)'}
 	if (config.fgshadow === undefined) {
 		var bg = config.bgcolor.match(/\d+(\.\d+)?/g).map(function (x) {return parseFloat(x)});
@@ -190,7 +194,7 @@ var drawHPBar = function (index, scale, maxHP, currentHP, interimHP) {
 				$(this).append(hpBar);
 
 				if (interimHP > 0) {
-					var hpText = scaleText([interimHP.toLocaleString()], $(hpBar).innerWidth() - vw(2), $(hpBar).innerHeight())[0];
+					var hpText = scaleText([interimHP.toLocaleString()], $(hpBar).innerWidth() - vw(2), $(hpBar).innerHeight() + vw(1))[0];
 					$(this).append($(hpText).addClass('playerLeft'));
 				}
 			});
@@ -214,7 +218,7 @@ var drawHPBar = function (index, scale, maxHP, currentHP, interimHP) {
 				$(this).append(hpBar);
 
 				if (interimHP > 0) {
-					var hpText = scaleText([interimHP.toLocaleString()], hpBar.innerWidth() - vw(2), hpBar.innerHeight())[0];
+					var hpText = scaleText([interimHP.toLocaleString()], hpBar.innerWidth() - vw(2), hpBar.innerHeight() + vw(1))[0];
 					$(this).append($(hpText).addClass('playerRight'));
 				}
 			});
@@ -244,7 +248,12 @@ var drawNames = function (player1, player2) {
 };
 
 var initDisplay = function () {
-	$('body').css('background-color', config.bgcolor);
+	loadWebFont(config.font);
+
+	$('body').css({
+		'background-color' : config.bgcolor,
+		'font-family'      : '\'' + config.font.replace(/[\\']/g, '\\$&') + '\', sans-serif'
+	});
 
 	// pre-load default player image
 	var defaultImg = $('<img>').css('visibility', 'hidden').attr('src', config.defaultImage);

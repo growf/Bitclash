@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=VT323&subset=latin-ext');
-
 html, body {
 	margin: 0;
 	padding: 0;
 }
 
 body {
-	font-family: 'VT323', sans-serif;
 	overflow: hidden;
 }
 
@@ -102,6 +99,7 @@ div.playerHP > svg {
 }
 
 div.playerHP > div.scaledText {
+	margin-top: -0.5vw;
 	margin-left: 1vw;
 	margin-right: 1vw;
 }
@@ -137,7 +135,6 @@ div.compactView div.playerHP > svg {
 
 div.scaledText {
 	position: absolute;
-	overflow: hidden;
 	white-space: nowrap;
 	padding: 1px;
 }

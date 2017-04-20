@@ -15,6 +15,7 @@ var getConfiguration = function (resetOneTimeSettings) {
 		'bgcolorG'           : (isFinite(config.bgcolorG) ? Math.min(Math.max(config.bgcolorG, 0), 255) : 255),
 		'bgcolorB'           : (isFinite(config.bgcolorB) ? Math.min(Math.max(config.bgcolorB, 0), 255) : 255),
 		'bgcolorA'           : (isFinite(config.bgcolorA) ? Math.min(Math.max(config.bgcolorA, 0), 255) : 0),
+		'textFont'           : ([undefined, null].indexOf(config.textFont) == -1 ? config.textFont : 'VT323'),
 		'fgcolorR'           : (isFinite(config.fgcolorR) ? Math.min(Math.max(config.fgcolorR, 0), 255) : 255),
 		'fgcolorG'           : (isFinite(config.fgcolorG) ? Math.min(Math.max(config.fgcolorG, 0), 255) : 255),
 		'fgcolorB'           : (isFinite(config.fgcolorB) ? Math.min(Math.max(config.fgcolorB, 0), 255) : 255),
@@ -60,6 +61,7 @@ var loadConfiguration = function (resetOneTimeSettings) {
 	$('#bgcolorG').val(config.bgcolorG);
 	$('#bgcolorB').val(config.bgcolorB);
 	$('#bgcolorA').val(config.bgcolorA);
+	$('#textFont').val(config.textFont);
 	$('#fgcolorR').val(config.fgcolorR);
 	$('#fgcolorG').val(config.fgcolorG);
 	$('#fgcolorB').val(config.fgcolorB);
@@ -98,6 +100,7 @@ var saveConfiguration = function () {
 		'bgcolorG'           : $('#bgcolorG').val(),
 		'bgcolorB'           : $('#bgcolorB').val(),
 		'bgcolorA'           : $('#bgcolorA').val(),
+		'textFont'           : $('#textFont').val(),
 		'fgcolorR'           : $('#fgcolorR').val(),
 		'fgcolorG'           : $('#fgcolorG').val(),
 		'fgcolorB'           : $('#fgcolorB').val(),
@@ -151,15 +154,7 @@ var authorize = function () {
 	}
 
 	// open popup to authorize application for Twitch account
-	var twitchAuthURL = apiURL;
-	twitchAuthURL += 'oauth2/authorize?response_type=token';
-	twitchAuthURL += '&client_id=' + apiAuth.Twitch.clientID;
-	twitchAuthURL += '&redirect_uri=' + urlEncode(apiAuth.Twitch.redirectURI);
-	twitchAuthURL += '&scope=' + urlEncode(scope.join(' '));
-	twitchAuthURL += '&state=' + generateCSRFToken();
-	if (force) {twitchAuthURL += '&force_verify=true'}
-
-	window.open(twitchAuthURL, '', 'width=425,height=525');
+	window.open(getAuthorizationURL(scope, force), '', 'width=425,height=525');
 };
 
 var updateURL = function () {
@@ -187,6 +182,7 @@ var updateURL = function () {
 	url += (config.testMode === 'enabled' ? '&test' : '');
 	url += '&view=' + config.view;
 	url += '&bg=' + [config.bgcolorR, config.bgcolorG, config.bgcolorB, config.bgcolorA].join(',');
+	url += '&font=' + urlEncode(config.textFont);
 	url += '&fg=' + [config.fgcolorR, config.fgcolorG, config.fgcolorB, config.fgcolorA].join(',');
 	url += '&sh=' + [config.fgshadowR, config.fgshadowG, config.fgshadowB, config.fgshadowA].join(',');
 	url += (config.defaultImageURL.length ? '&img=' + urlEncode(config.defaultImageURL) : '');
@@ -208,6 +204,18 @@ var updateWarnings = function () {
 	if ($('#resetDefenderName').val() !== '' || $('#resetDefenderHP').val() !== '' || $('#resetDefenderMaxHP').val() !== '') {$('.resetEnabled').show()}
 };
 
+var updateFontList = function () {
+	$('#textFont').empty();
+	var fonts = getWebFonts();
+	for (var i in fonts) {
+		$('#textFont').append($('<option>').attr('value', fonts[i]).text(fonts[i]));
+	}
+
+	var config = getConfiguration();
+	$('#textFont').val(config.textFont);
+	updateSampleText();
+}
+
 var updateSampleView = function () {
 	$('#sampleView img').hide();
 	$('#sampleView img.' + $('#view').val()).show();
@@ -215,10 +223,18 @@ var updateSampleView = function () {
 
 var updateSampleText = function () {
 	var bgcolor = 'rgba(' + [$('#bgcolorR').val(), $('#bgcolorG').val(), $('#bgcolorB').val(), $('#bgcolorA').val() / 255].join(', ') + ')';
+	var textFont = ([undefined, null].indexOf($('#textFont').val()) == -1 ? $('#textFont').val() : 'VT323');
 	var fgcolor = 'rgba(' + [$('#fgcolorR').val(), $('#fgcolorG').val(), $('#fgcolorB').val(), $('#fgcolorA').val() / 255].join(', ') + ')';
 	var fgshadow = 'rgba(' + [$('#fgshadowR').val(), $('#fgshadowG').val(), $('#fgshadowB').val(), $('#fgshadowA').val() / 255].join(', ') + ')';
 
-	$('#sampleText').css('background', bgcolor).css('color', fgcolor).css('text-shadow', '0 1px 4px ' + fgshadow);
+	loadWebFont(textFont, {'text' : 'Bitclash'});
+
+	$('#sampleText').css({
+		'background'  : bgcolor,
+		'font-family' : '\'' + textFont.replace(/[\\']/g, '\\$&') + '\', sans-serif',
+		'color'       : fgcolor,
+		'text-shadow' : '0 1px 4px ' + fgshadow
+	});
 };
 
 var updateSampleImage = function () {
@@ -245,6 +261,8 @@ var loadOAuth = function () {
 }
 
 var init = function () {
+	initWebFonts(updateFontList);
+
 	// set event listeners
 	window.setInterval(loadOAuth, 1000);
 	$('#url').on('click', function () {
@@ -257,11 +275,13 @@ var init = function () {
 	$('#applySettings').on('click', saveConfiguration);
 	$('#cancelSettings').on('click', loadConfiguration);
 	$('input, select').on('input change', function () {
+		$('#authorize, #reauthorize').prop('disabled', true);
 		$('#applySettings, #cancelSettings').prop('disabled', false);
 		updateURL();
 	});
 	$('#view').on('change', updateSampleView);
-	$('#bgcolor input, #fgcolor input, #fgshadow input').on('input change', updateSampleText);
+	$('#background input, #text input, #textShadow input').on('input change', updateSampleText);
+	$('#textFont').on('input', updateSampleText);
 	$('#defaultImageURL').on('change', updateSampleImage);
 
 	// initialise form

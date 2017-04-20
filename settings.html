@@ -101,8 +101,8 @@
 							</div>
 						</li>
 						<li>
-							<label for="bgcolor">Background</label>
-							<ol id="bgcolor">
+							<label for="background">Background</label>
+							<ol id="background">
 								<li>
 									<label for="bgcolorR">Red</label>
 									<input type="range" id="bgcolorR" min="0" max="255">
@@ -122,8 +122,18 @@
 							</ol>
 						</li>
 						<li>
-							<label for="fgcolor">Text</label>
-							<ol id="fgcolor">
+							<label for="text">Text</label>
+							<ol id="text">
+								<li>
+									<label for="textFont">Font</label>
+									<select id="textFont">
+										<option value="VT323">VT323</option>
+									</select>
+								</li>
+								<li>
+									<label></label>
+									<div id="textFontInfo">View samples on <a href="https://fonts.google.com/" target="_blank">Google Fonts</a></div>
+								</li>
 								<li>
 									<label for="fgcolorR">Red</label>
 									<input type="range" id="fgcolorR" min="0" max="255">
@@ -143,8 +153,8 @@
 							</ol>
 						</li>
 						<li>
-							<label for="fgshadow">Text Shadow</label>
-							<ol id="fgshadow">
+							<label for="textShadow">Text Shadow</label>
+							<ol id="textShadow">
 								<li>
 									<label for="fgshadowR">Red</label>
 									<input type="range" id="fgshadowR" min="0" max="255">
@@ -245,6 +255,8 @@
 
 		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="js/shared.js"></script>
+		<script type="text/javascript" src="js/twitch.js"></script>
+		<script type="text/javascript" src="js/google.js"></script>
 		<script type="text/javascript" src="js/settings.js"></script>
 	</body>
 </html>

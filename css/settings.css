@@ -1,5 +1,4 @@
 @import url('shared.css');
-@import url('https://fonts.googleapis.com/css?family=VT323&subset=latin-ext');
 
 body > div {
 	min-width: 22em;
@@ -122,6 +121,11 @@ div#resetInfo > p {
 	text-align: justify;
 }
 
+div#textFontInfo {
+	font-style: italic;
+	font-size: 90%;
+}
+
 div#sampleView {
 	border: 1px solid #f0f0f0;
 	border-radius: 0.5em;
@@ -142,7 +146,7 @@ div#sample {
 }
 
 div#sampleText {
-	font-family: 'VT323', sans-serif;
+	font-family: sans-serif;
 	font-size: 250%;
 	padding: 0.25em 1em;
 }

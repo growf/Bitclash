@@ -1,3 +1,7 @@
+// Twitch API endpoint URLs
+var twitchAPIURL = 'https://api.twitch.tv/kraken/';
+var twitchPubsubURL = 'wss://pubsub-edge.twitch.tv';
+
 // PubSub state/event objects
 var pubsubSocket;
 var pubsubBackOff;
@@ -132,17 +136,29 @@ var reconnectPubSub = function (event) {
 
 // connect to PubSub
 var connectPubSub = function () {
-	pubsubSocket = new WebSocket(pubsubURL);
+	pubsubSocket = new WebSocket(twitchPubsubURL);
 	pubsubSocket.onopen = listenPubSub;
 	pubsubSocket.onmessage = receivePubSub;
 	pubsubSocket.onerror = reconnectPubSub;
 	pubsubSocket.onclose = reconnectPubSub;
 };
 
+// build URL for authorizing application with given scope
+var getAuthorizationURL = function (scope, forceVerify) {
+	var twitchAuthURL = twitchAPIURL;
+	twitchAuthURL += 'oauth2/authorize?response_type=token';
+	twitchAuthURL += '&client_id=' + apiAuth.Twitch.clientID;
+	twitchAuthURL += '&redirect_uri=' + urlEncode(apiAuth.Twitch.redirectURI);
+	twitchAuthURL += '&scope=' + urlEncode(scope.join(' '));
+	twitchAuthURL += '&state=' + generateCSRFToken();
+	if (forceVerify) {twitchAuthURL += '&force_verify=true'}
+	return twitchAuthURL;
+};
+
 // retrieve user object for authorized user
 var getAuthorizedUser = function (tokenOAuth, callback) {
 	$.ajax({
-		'url'     : apiURL + 'user',
+		'url'     : twitchAPIURL + 'user',
 		'headers' : {
 			'Accept'        : 'application/vnd.twitchtv.v5+json',
 			'Authorization' : 'OAuth ' + tokenOAuth,
@@ -170,7 +186,7 @@ var getAuthorizedUser = function (tokenOAuth, callback) {
 // retrieve user object for user with given ID
 var getUser = function (id, callback) {
 	$.ajax({
-		'url'     : apiURL + 'users/' + id,
+		'url'     : twitchAPIURL + 'users/' + id,
 		'headers' : {
 			'Accept'    : 'application/vnd.twitchtv.v5+json',
 			'Client-Id' : apiAuth.Twitch.clientID
@@ -200,7 +216,7 @@ var getUser = function (id, callback) {
 // retrieve user object for user with given login name
 var getUserByLogin = function (login, callback) {
 	$.ajax({
-		'url'     : apiURL + 'users',
+		'url'     : twitchAPIURL + 'users',
 		'data'    : {
 			'login' : login
 		},
