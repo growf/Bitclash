@@ -708,4 +708,4 @@ var init = function () {
 };
 
 // need to wait until everything is loaded
-$(window).on('load', init);
+$(window).on('load', function () {loadAPIAuth(init)});

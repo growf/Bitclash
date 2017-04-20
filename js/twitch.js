@@ -146,7 +146,7 @@ var getAuthorizedUser = function (tokenOAuth, callback) {
 		'headers' : {
 			'Accept'        : 'application/vnd.twitchtv.v5+json',
 			'Authorization' : 'OAuth ' + tokenOAuth,
-			'Client-Id'     : clientID
+			'Client-Id'     : apiAuth.Twitch.clientID
 		}
 	}).done(function (data, textStatus, jqXHR) {
 		callback(true, data);
@@ -173,7 +173,7 @@ var getUser = function (id, callback) {
 		'url'     : apiURL + 'users/' + id,
 		'headers' : {
 			'Accept'    : 'application/vnd.twitchtv.v5+json',
-			'Client-Id' : clientID
+			'Client-Id' : apiAuth.Twitch.clientID
 		}
 	}).done(function (data, textStatus, jqXHR) {
 		callback(true, data);
@@ -206,7 +206,7 @@ var getUserByLogin = function (login, callback) {
 		},
 		'headers' : {
 			'Accept'    : 'application/vnd.twitchtv.v5+json',
-			'Client-Id' : clientID
+			'Client-Id' : apiAuth.Twitch.clientID
 		}
 	}).done(function (data, textStatus, jqXHR) {
 		callback(true, data);

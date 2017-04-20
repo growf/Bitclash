@@ -153,8 +153,8 @@ var authorize = function () {
 	// open popup to authorize application for Twitch account
 	var twitchAuthURL = apiURL;
 	twitchAuthURL += 'oauth2/authorize?response_type=token';
-	twitchAuthURL += '&client_id=' + clientID;
-	twitchAuthURL += '&redirect_uri=' + urlEncode(authURL);
+	twitchAuthURL += '&client_id=' + apiAuth.Twitch.clientID;
+	twitchAuthURL += '&redirect_uri=' + urlEncode(apiAuth.Twitch.redirectURI);
 	twitchAuthURL += '&scope=' + urlEncode(scope.join(' '));
 	twitchAuthURL += '&state=' + generateCSRFToken();
 	if (force) {twitchAuthURL += '&force_verify=true'}
@@ -268,4 +268,4 @@ var init = function () {
 	loadConfiguration(true);
 };
 
-$(document).ready(init);
+$(document).ready(function () {loadAPIAuth(init)});
