@@ -11,3 +11,17 @@ The challenger and the current defender take turns to fight each other until one
 Critical hits, if enabled, boost a single hit's damage by a multiplier. Critical hit chance is *per match-up*; the challenger and defender will throw at most one critical hit in each fight.
 
 If the challenger defeats the current defender then they become the new defender and (optionally) get a boost to their hit points. The defender can also heal themselves by cheering but their health cannot exceed their maximum hit points.
+
+## Using *Bitclash*
+
+*Bitclash* is intended for use as a webpage/URL source in your broadcast software. It can also be captured from a web browser although typically that won't support a transparent background and you may need to use chroma keying to achieve transparency.
+
+To authorize *Bitclash* for your channel visit http://growf.org/Bitclash/. In standard usage *Bitclash* requires permission to view your user details. A test mode that listens for whispers instead of cheers can be enabled; this will require an additional permission to be able to access your Twitch chat which can be revoked once testing is complete. Once authorized a URL will be generated for *Bitclash* containing your authorization token and selected configuration.
+
+*Bitclash* should work with any browser or embedded browser with support for JavaScript and cookies. The current state of combat and any queued cheers are saved to a persistent browser cookie and will be restored if the widget is closed and re-opened. The current defender can be reset to a specific user and/or number of hit points as a one-time update via the settings page; this will also clear the current challenger and any fight that is in progress but will not remove any queued cheers. If your webpage/URL source supports interaction with the widget or you are using *Bitclash* in a browser players' avatars can be swapped for a default image by clicking on the avatar.
+
+No information is stored on *Bitclash*'s server. The combat details, queued cheers, and settings are all stored on your machine. *Bitclash* is only able to queue viewer's cheers whilst the *Bitclash* window is open as a source or in a browser. *Bitclash* is provided for entertainment purposes; no liability can be accepted for any defects, outages, or loss of game data.
+
+## Creating Your Own *Bitclash* Server
+
+If you want to deploy *Bitclash* to your own server you'll need to replace the authorization tokens in the file [auth.json](https://github.com/growf/Bitclash/blob/master/auth.json); the current values will not work on your server. You will need to [register your *Bitclash* instance with Twitch](https://www.twitch.tv/settings/connections) and [obtain Google API credentials](https://console.developers.google.com/apis/credentials) to have access to the list of available Google Fonts.
