@@ -182,7 +182,6 @@ div#sampleImage {
 	flex-direction: row;
 	border: 1px solid rgb(80%, 80%, 80%);
 	border-radius: 5px;
-	font: caption;
 }
 
 #colorDialog .details {
@@ -215,12 +214,13 @@ div#sampleImage {
 	margin: 10px 0 0;
 	padding: 0;
 	border-top: 1px solid rgb(80%, 80%, 80%);
+	font-size: 100%;
 }
 
 #colorDialog .controls > ul > li {
 	display: flex;
 	align-items: center;
-	padding-top: 10px;
+	padding: 10px 0 0;
 	white-space: nowrap;
 }
 
