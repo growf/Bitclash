@@ -271,8 +271,14 @@ var init = function () {
 		updateWarnings();
 	});
 	$('#authorize, #reauthorize').on('click', authorize);
-	$('#applySettings').on('click', saveConfiguration);
-	$('#cancelSettings').on('click', loadConfiguration);
+	$('#applySettings').on('click', function () {
+		colorDialog.submit();
+		saveConfiguration();
+	});
+	$('#cancelSettings').on('click',  function () {
+		colorDialog.submit();
+		loadConfiguration();
+	});
 	$('input, select').on('input change', function () {
 		$('#authorize, #reauthorize').prop('disabled', true);
 		$('#applySettings, #cancelSettings').prop('disabled', false);
