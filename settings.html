@@ -104,16 +104,11 @@
 							<label for="background">Background</label>
 							<ol id="background">
 								<li>
-									<label for="bgcolorR">Red</label>
-									<input type="range" id="bgcolorR" min="0" max="255">
-								</li>
-								<li>
-									<label for="bgcolorG">Green</label>
-									<input type="range" id="bgcolorG" min="0" max="255">
-								</li>
-								<li>
-									<label for="bgcolorB">Blue</label>
-									<input type="range" id="bgcolorB" min="0" max="255">
+									<label for="bgcolorRGB">Color</label>
+									<div class="colorInput">
+										<button class="colorSample" tabindex="0"></button>
+										<input type="hidden" id="bgcolorRGB" class="colorValue">
+									</div>
 								</li>
 								<li>
 									<label for="bgcolorA">Alpha</label>
@@ -135,16 +130,11 @@
 									<div id="textFontInfo">View samples on <a href="https://fonts.google.com/" target="_blank">Google Fonts</a></div>
 								</li>
 								<li>
-									<label for="fgcolorR">Red</label>
-									<input type="range" id="fgcolorR" min="0" max="255">
-								</li>
-								<li>
-									<label for="fgcolorG">Green</label>
-									<input type="range" id="fgcolorG" min="0" max="255">
-								</li>
-								<li>
-									<label for="fgcolorB">Blue</label>
-									<input type="range" id="fgcolorB" min="0" max="255">
+									<label for="fgcolorRGB">Color</label>
+									<div class="colorInput">
+										<button class="colorSample" tabindex="0"></button>
+										<input type="hidden" id="fgcolorRGB" class="colorValue">
+									</div>
 								</li>
 								<li>
 									<label for="fgcolorA">Alpha</label>
@@ -156,16 +146,11 @@
 							<label for="textShadow">Text Shadow</label>
 							<ol id="textShadow">
 								<li>
-									<label for="fgshadowR">Red</label>
-									<input type="range" id="fgshadowR" min="0" max="255">
-								</li>
-								<li>
-									<label for="fgshadowG">Green</label>
-									<input type="range" id="fgshadowG" min="0" max="255">
-								</li>
-								<li>
-									<label for="fgshadowB">Blue</label>
-									<input type="range" id="fgshadowB" min="0" max="255">
+									<label for="fgshadowRGB">Color</label>
+									<div class="colorInput">
+										<button class="colorSample" tabindex="0"></button>
+										<input type="hidden" id="fgshadowRGB" class="colorValue">
+									</div>
 								</li>
 								<li>
 									<label for="fgshadowA">Alpha</label>
@@ -253,10 +238,52 @@
 			</ul>
 		</div>
 
+		<div id="colorDialog" class="dialog">
+			<div class="details">
+				<button class="sample" tabindex="0"></button>
+				<div class="controls">
+					<ul>
+						<li>
+							<label>Red</label>
+							<input type="range" class="red range" min="0" max="255" tabindex="0">
+							<div class="red label"></div>
+						</li>
+						<li>
+							<label>Green</label>
+							<input type="range" class="green range" min="0" max="255" tabindex="0">
+							<div class="green label"></div>
+						</li>
+						<li>
+							<label>Blue</label>
+							<input type="range" class="blue range" min="0" max="255" tabindex="0">
+							<div class="blue label"></div>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<label>Hex</label>
+							<input class="hex" tabindex="0">
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="picker">
+				<div class="wheel">
+					<canvas class="webgl"></canvas>
+					<canvas class="2d"></canvas>
+				</div>
+				<div class="slider">
+					<canvas class="webgl"></canvas>
+					<canvas class="2d"></canvas>
+				</div>
+			</div>
+		</div>
+
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/shared.js"></script>
 		<script type="text/javascript" src="js/twitch.js"></script>
 		<script type="text/javascript" src="js/google.js"></script>
+		<script type="text/javascript" src="js/color.js"></script>
 		<script type="text/javascript" src="js/settings.js"></script>
 	</body>
 </html>

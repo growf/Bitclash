@@ -1,5 +1,6 @@
 var configCookieName = 'BitclashConfig';
 var tokenOAuth;
+var colorDialog = new ColorDialog($('#colorDialog'));
 
 var getConfiguration = function (resetOneTimeSettings) {
 	var config;
@@ -57,18 +58,12 @@ var loadConfiguration = function (resetOneTimeSettings) {
 	$('#resetDefenderHP').val(config.resetDefenderHP);
 	$('#resetDefenderMaxHP').val(config.resetDefenderMaxHP);
 	$('#view').val(config.view);
-	$('#bgcolorR').val(config.bgcolorR);
-	$('#bgcolorG').val(config.bgcolorG);
-	$('#bgcolorB').val(config.bgcolorB);
+	$('#bgcolorRGB').val([config.bgcolorR, config.bgcolorG, config.bgcolorB].join(','));
 	$('#bgcolorA').val(config.bgcolorA);
 	$('#textFont').val(config.textFont);
-	$('#fgcolorR').val(config.fgcolorR);
-	$('#fgcolorG').val(config.fgcolorG);
-	$('#fgcolorB').val(config.fgcolorB);
+	$('#fgcolorRGB').val([config.fgcolorR, config.fgcolorG, config.fgcolorB].join(','));
 	$('#fgcolorA').val(config.fgcolorA);
-	$('#fgshadowR').val(config.fgshadowR);
-	$('#fgshadowG').val(config.fgshadowG);
-	$('#fgshadowB').val(config.fgshadowB);
+	$('#fgshadowRGB').val([config.fgshadowR, config.fgshadowG, config.fgshadowB].join(','));
 	$('#fgshadowA').val(config.fgshadowA);
 	$('#defaultImageURL').val(config.defaultImageURL);
 	$('#volume').val(config.volume);
@@ -78,6 +73,10 @@ var loadConfiguration = function (resetOneTimeSettings) {
 	$('#victoryMultiplier').val(config.victoryMultiplier);
 	$('#victoryMin').val(config.victoryMin);
 	$('#victoryMax').val(config.victoryMax);
+
+	$('#background .colorSample').css('background-color', 'rgb(' + $('#bgcolorRGB').val() + ')');
+	$('#text .colorSample').css('background-color', 'rgb(' + $('#fgcolorRGB').val() + ')');
+	$('#textShadow .colorSample').css('background-color', 'rgb(' + $('#fgshadowRGB').val() + ')');
 
 	$('#authorize, #reauthorize').prop('disabled', false);
 	$('#applySettings, #cancelSettings').prop('disabled', true);
@@ -96,18 +95,18 @@ var saveConfiguration = function () {
 		'resetDefenderHP'    : $('#resetDefenderHP').val(),
 		'resetDefenderMaxHP' : $('#resetDefenderMaxHP').val(),
 		'view'               : $('#view').val(),
-		'bgcolorR'           : $('#bgcolorR').val(),
-		'bgcolorG'           : $('#bgcolorG').val(),
-		'bgcolorB'           : $('#bgcolorB').val(),
+		'bgcolorR'           : $('#bgcolorRGB').val().split(',')[0],
+		'bgcolorG'           : $('#bgcolorRGB').val().split(',')[1],
+		'bgcolorB'           : $('#bgcolorRGB').val().split(',')[2],
 		'bgcolorA'           : $('#bgcolorA').val(),
 		'textFont'           : $('#textFont').val(),
-		'fgcolorR'           : $('#fgcolorR').val(),
-		'fgcolorG'           : $('#fgcolorG').val(),
-		'fgcolorB'           : $('#fgcolorB').val(),
+		'fgcolorR'           : $('#fgcolorRGB').val().split(',')[0],
+		'fgcolorG'           : $('#fgcolorRGB').val().split(',')[1],
+		'fgcolorB'           : $('#fgcolorRGB').val().split(',')[2],
 		'fgcolorA'           : $('#fgcolorA').val(),
-		'fgshadowR'          : $('#fgshadowR').val(),
-		'fgshadowG'          : $('#fgshadowG').val(),
-		'fgshadowB'          : $('#fgshadowB').val(),
+		'fgshadowR'          : $('#fgshadowRGB').val().split(',')[0],
+		'fgshadowG'          : $('#fgshadowRGB').val().split(',')[1],
+		'fgshadowB'          : $('#fgshadowRGB').val().split(',')[2],
 		'fgshadowA'          : $('#fgshadowA').val(),
 		'defaultImageURL'    : $('#defaultImageURL').val(),
 		'volume'             : $('#volume').val(),
@@ -222,10 +221,10 @@ var updateSampleView = function () {
 };
 
 var updateSampleText = function () {
-	var bgcolor = 'rgba(' + [$('#bgcolorR').val(), $('#bgcolorG').val(), $('#bgcolorB').val(), $('#bgcolorA').val() / 255].join(', ') + ')';
+	var bgcolor = 'rgba(' + [$('#bgcolorRGB').val(), $('#bgcolorA').val() / 255].join(', ') + ')';
 	var textFont = ([undefined, null].indexOf($('#textFont').val()) == -1 ? $('#textFont').val() : 'VT323');
-	var fgcolor = 'rgba(' + [$('#fgcolorR').val(), $('#fgcolorG').val(), $('#fgcolorB').val(), $('#fgcolorA').val() / 255].join(', ') + ')';
-	var fgshadow = 'rgba(' + [$('#fgshadowR').val(), $('#fgshadowG').val(), $('#fgshadowB').val(), $('#fgshadowA').val() / 255].join(', ') + ')';
+	var fgcolor = 'rgba(' + [$('#fgcolorRGB').val(), $('#fgcolorA').val() / 255].join(', ') + ')';
+	var fgshadow = 'rgba(' + [$('#fgshadowRGB').val(), $('#fgshadowA').val() / 255].join(', ') + ')';
 
 	loadWebFont(textFont, {'text' : 'Bitclash'});
 
@@ -280,6 +279,11 @@ var init = function () {
 		updateURL();
 	});
 	$('#view').on('change', updateSampleView);
+	$('#background .colorInput, #text .colorInput, #textShadow .colorInput').click(function (event) {
+		if (event.isDefaultPrevented()) {return}
+		colorDialog.show(this);
+		event.preventDefault();
+	});
 	$('#background input, #text input, #textShadow input').on('input change', updateSampleText);
 	$('#textFont').on('input', updateSampleText);
 	$('#defaultImageURL').on('change', updateSampleImage);

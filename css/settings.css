@@ -89,6 +89,15 @@ button {
 	padding: 1px 1em;
 }
 
+button.colorSample {
+	width: 3em;
+	height: 1.5em;
+	border: 1px solid #b0b0b0;
+	background-color: white;
+	padding: 0;
+	margin: 0;
+}
+
 select {
 	border: 1px solid #b0b0b0;
 	background-color: #ffffff;
@@ -168,10 +177,113 @@ div#sampleImage {
 	background-position: center;
 }
 
+#colorDialog {
+	display: inline-flex;
+	flex-direction: row;
+	border: 1px solid rgb(80%, 80%, 80%);
+	border-radius: 5px;
+	font: caption;
+}
+
+#colorDialog .details {
+	min-width: 0;
+	max-width: 250px;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	margin: 10px 0 10px 10px;
+	padding: 0 10px 0 0;
+	border-right: 1px solid rgb(80%, 80%, 80%);
+	border-bottom: 0;
+}
+
+#colorDialog .sample {
+	flex-grow: 1;
+	padding: 0;
+	margin: 0;
+	background-color: white;
+	border: 1px solid rgb(80%, 80%, 80%);
+	border-radius: 0;
+}
+
+#colorDialog .controls {
+	min-width: 0;
+}
+
+#colorDialog .controls > ul {
+	list-style: none;
+	margin: 10px 0 0;
+	padding: 0;
+	border-top: 1px solid rgb(80%, 80%, 80%);
+}
+
+#colorDialog .controls > ul > li {
+	display: flex;
+	align-items: center;
+	padding-top: 10px;
+	white-space: nowrap;
+}
+
+#colorDialog .controls label {
+	flex-shrink: 0;
+	width: 3.5em;
+}
+
+#colorDialog .controls input {
+	flex-grow: 1;
+	min-width: 0;
+}
+
+#colorDialog .controls .label {
+	flex-shrink: 0;
+	width: 2.5em;
+	text-align: right;
+}
+
+#colorDialog .picker {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#colorDialog .picker > div {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#colorDialog .picker > div > canvas {
+	position: absolute;
+	cursor: pointer;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#colorDialog .picker .wheel {
+	min-width: 150px;
+	max-width: 150px;
+	min-height: 150px;
+	max-height: 150px;
+	margin: 10px;
+}
+
+#colorDialog .picker .slider {
+	min-width: 150px;
+	max-width: 150px;
+	min-height: 15px;
+	max-height: 15px;
+	margin: 0 10px 10px;
+}
+
 .testModeEnabled,
 .resetEnabled,
 .authorized,
 .unauthorized,
-.defaultImageSelected {
+.defaultImageSelected,
+.dialog {
 	display: none;
 }
