@@ -31,7 +31,7 @@ var readConfiguration = function () {
 				}
 				break;
 			case 'view':
-				if (['normal', 'compact', 'tiny'].indexOf(v) !== -1) {config.view = v}
+				if (['wide', 'normal', 'compact', 'tiny'].indexOf(v) !== -1) {config.view = v}
 				break;
 			case 'bg':
 				v = v.split(',').map(function (x) {return (isFinite(parseFloat(x)) ? Math.min(Math.max(Math.round(x), 0), 255) : 0)});
@@ -235,12 +235,12 @@ var drawNames = function (player1, player2) {
 		$(this).append($(nameText[1]).addClass('playerRight'));
 	});
 
-	$('div.compactView div.playerName.playerLeft:visible').each(function () {
+	$('div.compactView, div.wideView').find('div.playerName.playerLeft:visible').each(function () {
 		$(this).empty();
 		var nameText = scaleText([player1], $(this).innerWidth(), $(this).innerHeight())[0];
 		$(this).append($(nameText).addClass('playerLeft'));
 	});
-	$('div.compactView div.playerName.playerRight:visible').each(function () {
+	$('div.compactView, div.wideView').find('div.playerName.playerRight:visible').each(function () {
 		$(this).empty();
 		var nameText = scaleText([player2], $(this).innerWidth(), $(this).innerHeight())[0];
 		$(this).append($(nameText).addClass('playerRight'));
@@ -265,6 +265,9 @@ var initDisplay = function () {
 	$(defaultImg).appendTo('body').remove();
 
 	switch (config.view) {
+		case 'wide':
+			$('.wideView').show();
+			break;
 		case 'compact':
 			$('.compactView').show();
 			break;

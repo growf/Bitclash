@@ -18,6 +18,13 @@ div.imageArea {
 	box-shadow: 0 0 0 1px black;
 }
 
+div.wideView div.imageArea {
+	min-width: 10vw;
+	max-width: 10vw;
+	min-height: 10vw;
+	max-height: 10vw;
+}
+
 div.normalView div.imageArea {
 	min-width: 20vw;
 	max-width: 20vw;
@@ -41,6 +48,15 @@ div.statusArea.playerLeft {
 }
 
 div.statusArea.playerRight {
+	margin-right: 1vw;
+}
+
+div.wideView div.statusArea {
+	min-height: 10vw;
+	max-height: 10vw;
+}
+
+div.wideView div.statusArea.playerLeft {
 	margin-right: 1vw;
 }
 
@@ -70,6 +86,17 @@ div.playerName {
 
 div.playerName div.scaledText {
 	bottom: 0;
+}
+
+div.wideView div.playerName {
+	min-height: 5vw;
+	max-height: 5vw;
+	margin: 1vw 0 0;
+}
+
+div.wideView div.playerName div.scaledText {
+	top: 0;
+	bottom: initial;
 }
 
 div.normalView div.playerName {
@@ -104,6 +131,16 @@ div.playerHP > div.scaledText {
 	top: 50%;
 	transform: translate(0, -50%);
 	font-variant-numeric: lining-nums;
+}
+
+div.wideView div.playerHP {
+	min-height: 4vw;
+	max-height: 4vw;
+}
+
+div.wideView div.playerHP > svg {
+	min-height: 4vw;
+	max-height: 4vw;
 }
 
 div.normalView div.playerHP {
@@ -163,6 +200,7 @@ div.scaledText.healthText:before {
 	content: '+';
 }
 
+.wideView,
 .normalView,
 .compactView {
 	display: none;

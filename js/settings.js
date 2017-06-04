@@ -11,7 +11,7 @@ var getConfiguration = function (resetOneTimeSettings) {
 		'resetDefenderName'  : ([undefined, null].indexOf(config.resetDefenderName) == -1 ? config.resetDefenderName : ''),
 		'resetDefenderHP'    : (isFinite(config.resetDefenderHP) && config.resetDefenderHP !== '' ? Math.ceil(Math.min(Math.max(config.resetDefenderHP, 1), 1000000)) : ''),
 		'resetDefenderMaxHP' : (isFinite(config.resetDefenderMaxHP) && config.resetDefenderMaxHP !== '' ? Math.ceil(Math.min(Math.max(config.resetDefenderMaxHP, 1), 1000000)) : ''),
-		'view'               : (['normal', 'compact', 'tiny'].indexOf(config.view) != -1 ? config.view : 'normal'),
+		'view'               : (['wide', 'normal', 'compact', 'tiny'].indexOf(config.view) != -1 ? config.view : 'normal'),
 		'bgcolorR'           : (isFinite(config.bgcolorR) ? Math.min(Math.max(config.bgcolorR, 0), 255) : 255),
 		'bgcolorG'           : (isFinite(config.bgcolorG) ? Math.min(Math.max(config.bgcolorG, 0), 255) : 255),
 		'bgcolorB'           : (isFinite(config.bgcolorB) ? Math.min(Math.max(config.bgcolorB, 0), 255) : 255),
