@@ -24,4 +24,13 @@ No information is stored on *Bitclash*'s server. The combat details, queued chee
 
 ## Creating Your Own *Bitclash* Server
 
-If you want to deploy *Bitclash* to your own server you'll need to replace the authorization tokens in the file [auth.json](https://github.com/growf/Bitclash/blob/master/auth.json); the current values will not work on your server. You will need to [register your *Bitclash* instance with Twitch](https://www.twitch.tv/settings/connections) and [obtain Google API credentials](https://console.developers.google.com/apis/credentials) to have access to the list of available Google Fonts.
+If you want to deploy *Bitclash* to your own server you will need to:
+* [Register your *Bitclash* instance with Twitch](https://www.twitch.tv/settings/connections).  
+The Redirect URI should be the URL where [authorize.html](https://github.com/growf/Bitclash/blob/master/authorize.html) can be accessed from your server.  
+The Redirect URI and your Client ID should be placed in [auth.json](https://github.com/growf/Bitclash/blob/master/auth.json).
+
+* [Obtain Google API credentials](https://console.developers.google.com/apis/credentials) to have access to the list of available Google Fonts.  
+The Google API key should be placed in [auth.json](https://github.com/growf/Bitclash/blob/master/auth.json).
+
+* Update the application URL at the top of [js/shared.js](https://github.com/growf/Bitclash/blob/master/js/shared.js#L2).  
+This should be the URL where [bitclash.html](https://github.com/growf/Bitclash/blob/master/bitclash.html) can be accessed from your server.
