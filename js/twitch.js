@@ -24,7 +24,7 @@ var receivePubSub = function (event) {
 	try {
 		message = JSON.parse(event.data);
 	} catch (e) {
-		reconnectPubSub;
+		reconnectPubSub();
 		return;
 	}
 
