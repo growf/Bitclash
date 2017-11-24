@@ -10,6 +10,9 @@ var pubsubPong;
 
 // send ping to PubSub
 var pingPubSub = function () {
+	// clear event
+	pubsubPing = undefined;
+
 	// schedule reconnection if PONG is not received within 10 seconds
 	pubsubPong = window.setTimeout(reconnectPubSub, 10000);
 
