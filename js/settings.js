@@ -131,9 +131,9 @@ var authorize = function () {
 
 	// check permissions
 	var force = true;
-	var scope = ['user_read'];
+	var scope = ['user_read', 'bits:read'];
 	if (config.testMode === 'enabled') {
-		scope.push('chat_login');
+		scope.push('chat_login', 'whispers:read');
 	}
 	if (tokenOAuth && tokenOAuth.scope && tokenOAuth.scope.length == scope.length) {
 		var match = true;
