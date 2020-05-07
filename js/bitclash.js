@@ -302,17 +302,17 @@ var refreshPlayerImages = function () {
 	var state = getState();
 
 	if (state.player[0] !== undefined && state.player[0].id !== undefined) {
-		getUser(state.player[0].id, function (success, obj) {
+		getUser({'id': state.player[0].id}, config.token, function (success, obj) {
 			if (success) {
-				setPlayerImage(0, ([undefined, null, ''].indexOf(obj.logo) == -1 ? obj.logo : undefined))
+				setPlayerImage(0, ([undefined, null, ''].indexOf(obj.profile_image_url) == -1 ? obj.profile_image_url : undefined))
 			}
 		});
 	}
 
 	if (state.player[1] !== undefined && state.player[1].id !== undefined) {
-		getUser(state.player[1].id, function (success, obj) {
+		getUser({'id': state.player[1].id}, config.token, function (success, obj) {
 			if (success) {
-				setPlayerImage(1, ([undefined, null, ''].indexOf(obj.logo) == -1 ? obj.logo : undefined))
+				setPlayerImage(1, ([undefined, null, ''].indexOf(obj.profile_image_url) == -1 ? obj.profile_image_url : undefined))
 			}
 		});
 	}
@@ -532,9 +532,9 @@ var update = function () {
 		// add the user as the current defender
 		if (user === undefined) {return}
 		setPlayer(0, {
-			'id'            : parseInt(user._id),
-			'name'          : (user.display_name !== undefined && user.display_name.length ? user.display_name : user.name),
-			'image'         : ([undefined, null, ''].indexOf(user.logo) == -1 ? user.logo : undefined),
+			'id'            : parseInt(user.id),
+			'name'          : ([undefined, null, ''].indexOf(user.display_name) == -1 ? user.display_name : user.login),
+			'image'         : ([undefined, null, ''].indexOf(user.profile_image_url) == -1 ? user.profile_image_url : undefined),
 			'overrideImage' : false,
 			'defender'      : true,
 			'maxHP'         : config.hpMin,
@@ -575,12 +575,12 @@ var update = function () {
 				setPlayer(d, state.player[d]);
 			}
 
-			getUser(challenger.id, function (success, obj) {
+			getUser({'id': challenger.id}, config.token, function (success, obj) {
 				if (success) {
 					setPlayer(c, {
 						'id'            : challenger.id,
-						'name'          : (obj.display_name !== undefined && obj.display_name.length ? obj.display_name : obj.name),
-						'image'         : ([undefined, null, ''].indexOf(obj.logo) == -1 ? obj.logo : undefined),
+						'name'          : ([undefined, null, ''].indexOf(obj.display_name) == -1 ? obj.display_name : obj.login),
+						'image'         : ([undefined, null, ''].indexOf(obj.profile_image_url) == -1 ? obj.profile_image_url : undefined),
 						'overrideImage' : false,
 						'defender'      : false,
 						'maxHP'         : challenger.bits,
@@ -668,23 +668,18 @@ var forcePlayer = function (callback) {
 
 		callback.call(undefined, true);
 	} else {
-		getUserByLogin(config.forcePlayer.name, function (success, obj) {
+		getUser({'login' : config.forcePlayer.name}, config.token, function (success, obj) {
 			if (success) {
-				if (obj.users && obj.users.length) {
-					// overwrite current state
-					resetState(config.forcePlayer.timestamp, 0, {
-						'id'            : parseInt(obj.users[0]._id),
-						'name'          : (obj.users[0].display_name !== undefined && obj.users[0].display_name.length ? obj.users[0].display_name : obj.users[0].name),
-						'image'         : ([undefined, null, ''].indexOf(obj.users[0].logo) == -1 ? obj.users[0].logo : undefined),
-						'overrideImage' : false,
-						'defender'      : true,
-						'maxHP'         : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : config.hpMin)),
-						'currentHP'     : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : config.hpMin))
-					});
-				} else {
-					success = false;
-					showError('Couldn\'t reset defender: Unknown user');
-				}
+				// overwrite current state
+				resetState(config.forcePlayer.timestamp, 0, {
+					'id'            : parseInt(obj.id),
+					'name'          : ([undefined, null, ''].indexOf(obj.display_name) == -1 ? obj.display_name : obj.login),
+					'image'         : ([undefined, null, ''].indexOf(obj.profile_image_url) == -1 ? obj.profile_image_url : undefined),
+					'overrideImage' : false,
+					'defender'      : true,
+					'maxHP'         : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : config.hpMin)),
+					'currentHP'     : (config.forcePlayer.currentHP ? config.forcePlayer.currentHP : (config.forcePlayer.maxHP ? config.forcePlayer.maxHP : config.hpMin))
+				});
 			} else {
 				showError('Couldn\'t reset defender: ' + obj.error);
 			}
@@ -713,7 +708,7 @@ var init = function () {
 	$('div.imageArea.playerLeft').on('mousedown', toggleImage.bind(null, 0));
 	$('div.imageArea.playerRight').on('mousedown', toggleImage.bind(null, 1));
 
-	getAuthorizedUser(config.token, login);
+	getUser({}, config.token, login);
 
 	if (config.forcePlayer && config.forcePlayer.timestamp) {
 		forcePlayer(function (success) {if (success) {start()}});

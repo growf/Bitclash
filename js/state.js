@@ -101,7 +101,7 @@ var dequeueHit = function () {
 
 var queueChallenger = function (userID, username, bits) {
 	bits = parseInt(bits);
-	if (isFinite(bits) && bits > 0) {
+	if (userID !== null && username !== null && isFinite(bits) && bits > 0) {
 		var state = getState();
 		var index = state.queue.length - 1;
 		if (index >= 0 && state.queue[index].id === userID && state.queue[index].bits + bits <= 100000) {
@@ -111,7 +111,7 @@ var queueChallenger = function (userID, username, bits) {
 			state.queue.push({
 				'id'   : userID,
 				'name' : username,
-				'bits' : (bits)
+				'bits' : bits
 			});
 		}
 		state.updated = $.now();

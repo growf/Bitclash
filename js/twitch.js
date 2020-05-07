@@ -1,6 +1,7 @@
 // Twitch API endpoint URLs
-var twitchAPIURL = 'https://api.twitch.tv/kraken/';
-var twitchPubsubURL = 'wss://pubsub-edge.twitch.tv';
+var twitchAuthURL = 'https://id.twitch.tv/oauth2';
+var twitchAPIURL = 'https://api.twitch.tv/helix';
+var twitchPubSubURL = 'wss://pubsub-edge.twitch.tv';
 
 // PubSub state/event objects
 var pubsubSocket;
@@ -53,13 +54,13 @@ var receivePubSub = function (event) {
 			if (!message.data) {break}
 
 			switch (message.data.topic) {
-				case 'channel-bits-events-v1.' + user._id:
+				case 'channel-bits-events-v2.' + user.id:
 					try {
 						var cheer = JSON.parse(message.data.message);
-						queueChallenger(cheer.data.user_id, cheer.data.user_name, cheer.data.bits_used);
+						if (!cheer.data.is_anonymous) {queueChallenger(cheer.data.user_id, cheer.data.user_name, cheer.data.bits_used)}
 					} catch (e) {}
 					break;
-				case 'whispers.' + user._id:
+				case 'whispers.' + user.id:
 					try {
 						var whisper = JSON.parse(message.data.message);
 						var bits = 0;
@@ -95,7 +96,7 @@ var listenPubSub = function (event) {
 	pubsubPing = window.setTimeout(pingPubSub, Math.floor((3 + Math.random()) * 60000));
 
 	// send LISTEN
-	var topics = (config.testMode ? ['whispers.' + user._id] : ['channel-bits-events-v1.' + user._id]);
+	var topics = (config.testMode ? ['whispers.' + user.id] : ['channel-bits-events-v2.' + user.id]);
 	pubsubSocket.send(JSON.stringify({
 		'type' : 'LISTEN',
 		'data' : {
@@ -139,7 +140,7 @@ var reconnectPubSub = function (event) {
 
 // connect to PubSub
 var connectPubSub = function () {
-	pubsubSocket = new WebSocket(twitchPubsubURL);
+	pubsubSocket = new WebSocket(twitchPubSubURL);
 	pubsubSocket.onopen = listenPubSub;
 	pubsubSocket.onmessage = receivePubSub;
 	pubsubSocket.onerror = reconnectPubSub;
@@ -148,92 +149,40 @@ var connectPubSub = function () {
 
 // build URL for authorizing application with given scope
 var getAuthorizationURL = function (scope, forceVerify) {
-	var twitchAuthURL = twitchAPIURL;
-	twitchAuthURL += 'oauth2/authorize?response_type=token';
-	twitchAuthURL += '&client_id=' + apiAuth.Twitch.clientID;
-	twitchAuthURL += '&redirect_uri=' + urlEncode(apiAuth.Twitch.redirectURI);
-	twitchAuthURL += '&scope=' + urlEncode(scope.join(' '));
-	twitchAuthURL += '&state=' + generateCSRFToken();
-	if (forceVerify) {twitchAuthURL += '&force_verify=true'}
-	return twitchAuthURL;
+	var authURL = twitchAuthURL;
+	authURL += '/authorize?response_type=token';
+	authURL += '&client_id=' + apiAuth.Twitch.clientID;
+	authURL += '&redirect_uri=' + urlEncode(apiAuth.Twitch.redirectURI);
+	authURL += '&scope=' + urlEncode(scope.join(' '));
+	authURL += '&state=' + generateCSRFToken();
+	if (forceVerify) {authURL += '&force_verify=true'}
+	return authURL;
 };
 
-// retrieve user object for authorized user
-var getAuthorizedUser = function (tokenOAuth, callback) {
+// retrieve user object
+var getUser = function (data, tokenOAuth, callback) {
 	$.ajax({
-		'url'     : twitchAPIURL + 'user',
+		'url'     : twitchAPIURL + '/users',
+		'data'    : data,
 		'headers' : {
-			'Accept'        : 'application/vnd.twitchtv.v5+json',
-			'Authorization' : 'OAuth ' + tokenOAuth,
+			'Accept'        : 'application/json',
+			'Authorization' : 'Bearer ' + tokenOAuth,
 			'Client-Id'     : apiAuth.Twitch.clientID
 		}
 	}).done(function (data, textStatus, jqXHR) {
-		callback(true, data);
+		if (data && data.data && data.data[0]) {
+			callback(true, data.data[0]);
+		} else {
+			callback(false, {'error' : 'Unknown user'});
+		}
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		if (textStatus === 'timeout') {
 			callback(false, {'error' : 'Request timed out'});
 		} else if (textStatus === 'error') {
 			switch (jqXHR.status) {
 				case 401:
-					callback(false, {'error' : 'Application not authorized'});
+					callback(false, {'error' : 'Re-authorization required'});
 					break;
-				default:
-					callback(false, {'error' : 'Server returned error'});
-			}
-		} else {
-			callback(false, {'error' : 'Unknown error'});
-		}
-	});
-}
-
-// retrieve user object for user with given ID
-var getUser = function (id, callback) {
-	$.ajax({
-		'url'     : twitchAPIURL + 'users/' + id,
-		'headers' : {
-			'Accept'    : 'application/vnd.twitchtv.v5+json',
-			'Client-Id' : apiAuth.Twitch.clientID
-		}
-	}).done(function (data, textStatus, jqXHR) {
-		callback(true, data);
-	}).fail(function (jqXHR, textStatus, errorThrown) {
-		if (textStatus === 'timeout') {
-			callback(false, {'error' : 'Request timed out'});
-		} else if (textStatus === 'error') {
-			switch (jqXHR.status) {
-				case 404:
-					callback(false, {'error' : 'Unknown user'});
-					break;
-				case 422:
-					callback(false, {'error' : 'User unavailable'});
-					break;
-				default:
-					callback(false, {'error' : 'Server returned error'});
-			}
-		} else {
-			callback(false, {'error' : 'Unknown error'});
-		}
-	});
-}
-
-// retrieve user object for user with given login name
-var getUserByLogin = function (login, callback) {
-	$.ajax({
-		'url'     : twitchAPIURL + 'users',
-		'data'    : {
-			'login' : login
-		},
-		'headers' : {
-			'Accept'    : 'application/vnd.twitchtv.v5+json',
-			'Client-Id' : apiAuth.Twitch.clientID
-		}
-	}).done(function (data, textStatus, jqXHR) {
-		callback(true, data);
-	}).fail(function (jqXHR, textStatus, errorThrown) {
-		if (textStatus === 'timeout') {
-			callback(false, {'error' : 'Request timed out'});
-		} else if (textStatus === 'error') {
-			switch (jqXHR.status) {
 				case 404:
 					callback(false, {'error' : 'Unknown user'});
 					break;

@@ -126,31 +126,28 @@ var saveConfiguration = function () {
 	updateURL();
 };
 
-var authorize = function () {
+var getRequiredScope = function () {
 	var config = getConfiguration();
 
-	// check permissions
-	var force = true;
-	var scope = ['user_read', 'bits:read'];
+	var scope = ['bits:read'];
 	if (config.testMode === 'enabled') {
-		scope.push('chat_login', 'whispers:read');
+		scope.push('whispers:read');
 	}
-	if (tokenOAuth && tokenOAuth.scope && tokenOAuth.scope.length == scope.length) {
-		var match = true;
-		for (var i in scope.length) {
-			if (tokenOAuth.scope.indexOf(scope[i]) == -1) {
-				match = false;
-				break;
-			}
-		}
-		for (var i in tokenOAuth.scope.length) {
-			if (scope.indexOf(tokenOAuth.scope[i]) == -1) {
-				match = false;
-				break;
-			}
-		}
-		if (match) {force = false}
-	}
+
+	return scope;
+};
+
+var hasRequiredScope = function () {
+	return getRequiredScope().reduce(function (match, scope) {
+		return (match && tokenOAuth && tokenOAuth.scope && tokenOAuth.scope.indexOf(scope) != -1);
+	}, true);
+};
+
+var authorize = function () {
+	var scope = getRequiredScope();
+
+	// force interactive authorization if the scope has changed
+	var force = !hasRequiredScope() || (tokenOAuth.scope.length != scope.length);
 
 	// open popup to authorize application for Twitch account
 	window.open(getAuthorizationURL(scope, force), '', 'width=425,height=525');
@@ -172,7 +169,7 @@ var updateURL = function () {
 	$('li.authorized').show();
 
 	var config = getConfiguration();
-	if (config.testMode === 'enabled' && tokenOAuth.scope.indexOf('chat_login') == -1) {
+	if (!hasRequiredScope()) {
 		$('#url').text('Bitclash requires re-authorization').css('font-style', 'italic').css('color', 'silver');
 		return;
 	}
