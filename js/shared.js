@@ -10,7 +10,7 @@ var apiAuth;
 
 // load 3rd party API authentication details
 var loadAPIAuth = function (callback) {
-	var authURL = appURL.split('#')[0].split('?')[0].split('/').slice(0, -1).concat(['auth.json']).join('/');
+	var authURL = appURL.replace(/^[^:]+:/, document.location.protocol).split('#')[0].split('?')[0].split('/').slice(0, -1).concat(['auth.json']).join('/');
 	$.getJSON(authURL).done(function (data, textStatus, jqXHR) {apiAuth = data}).always(callback);
 };
 
